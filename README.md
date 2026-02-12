@@ -44,12 +44,14 @@
           +-------------------------------------------+
 
 # What's Included
-Channels (Triggers)
-Channel	Trigger Type	Notes
-Telegram	Native Telegram Trigger	Supports text, voice, images, documents
-WhatsApp	Webhook (Evolution API)	Text messages via Evolution API
-Gmail	Poll trigger (every minute)	Auto-processes incoming emails
-Heartbeat	Schedule (hourly)	Autonomous task processing
+
+# Channels (Triggers)
+| Channel   | Trigger Type              | Notes                                   |
+|-----------|--------------------------|----------------------------------------|
+| Telegram  | Native Telegram Trigger  | Supports text, voice, images, documents|
+| WhatsApp  | Webhook (Evolution API)  | Text messages via Evolution API        |
+| Gmail     | Poll trigger (every minute)| Auto-processes incoming emails        |
+| Heartbeat | Schedule (hourly)        | Autonomous task processing             |
 
 # Core Agent — n8nClaw
 
@@ -57,29 +59,33 @@ Model: Claude Sonnet 4.5 (via OpenRouter)
 Memory: Postgres chat history (15-message context window)
 Personality: Configurable via "soul" field (name, vibe, purpose)
 User Profile: Living document updated as the agent learns about you
-Media Handling (Telegram)
-Media Type	Processing
-Voice messages	Gemini 2.5 Flash transcription
-Images	Gemini nano-banana-pro-preview analysis
-Documents	Gemini 2.5 Flash document analysis
+
+# Media Handling (Telegram)
+| Media Type      | Processing                                   |
+|-----------------|---------------------------------------------|
+| Voice messages  | Gemini 2.5 Flash transcription              |
+| Images          | Gemini nano-banana-pro-preview analysis     |
+| Documents       | Gemini 2.5 Flash document analysis          |
 
 # Tools
 
-Tool	Purpose
-Get/Upsert Tasks	Task management (n8n data tables)
-Get/Upsert Subtasks	Subtask tracking linked by parent_task_id
-Update User & Heartbeat	Persist user profile and heartbeat state
-Supabase Vector Store	RAG — query past conversations for context
+| Tool                    | Purpose                                                      |
+|-------------------------|--------------------------------------------------------------|
+| Get/Upsert Tasks        | Task management (n8n data tables)                            |
+| Get/Upsert Subtasks     | Subtask tracking linked by parent_task_id                    |
+| Update User & Heartbeat | Persist user profile and heartbeat state                     |
+| Supabase Vector Store   | RAG — query past conversations for context                   |
 
 # Sub-Agents
 
-Agent	Model	Purpose
-Research Agent	Gemini 3 Flash	Web research via Tavily + Wikipedia
-Email Manager	Claude Haiku 4.5	Gmail CRUD (read, reply, send, delete, search)
-Document Manager	Claude Haiku 4.5	Google Docs/Drive (create, update, move, delete)
-Worker 1	Claude Haiku 4.5	Simple tasks
-Worker 2	Claude Sonnet 4.5	Mid-level work
-Worker 3	Claude Opus 4.6	Higher-order thinking
+| Agent          | Model             | Purpose                                         |
+|----------------|-----------------|------------------------------------------------|
+| Research Agent | Gemini 3 Flash   | Web research via Tavily + Wikipedia           |
+| Email Manager  | Claude Haiku 4.5 | Gmail CRUD (read, reply, send, delete, search)|
+| Document Manager | Claude Haiku 4.5 | Google Docs/Drive (create, update, move, delete) |
+| Worker 1       | Claude Haiku 4.5 | Simple tasks                                   |
+| Worker 2       | Claude Sonnet 4.5 | Mid-level work                                |
+| Worker 3       | Claude Opus 4.6 | Higher-order thinking                          |
 
 # Long-Term Memory Pipeline
 
@@ -104,55 +110,62 @@ Create three n8n data tables:
 
 Init Table (user profile):
 
-Column	Type
-username	string
-soul	string
-user	string
-heartbeat	string
-last_channel	string
-last_vector_id	number
+| Column          | Type   |
+|-----------------|--------|
+| username        | string |
+| soul            | string |
+| user            | string |
+| heartbeat       | string |
+| last_channel    | string |
+| last_vector_id  | number |
+
 Tasks Table:
 
-Column	Type
-task_name	string
-task_details	string
-task_complete	boolean
-Is_recurring	boolean
+| Column        | Type    |
+|---------------|---------|
+| task_name     | string  |
+| task_details  | string  |
+| task_complete | boolean |
+| Is_recurring  | boolean |
+
 Subtasks Table:
 
-Column	Type
-parent_task_id	string
-subtask_name	string
-subtask_details	string
-subtask_complete	boolean
+| Column           | Type    |
+|------------------|---------|
+| parent_task_id   | string  |
+| subtask_name     | string  |
+| subtask_details  | string  |
+| subtask_complete | boolean |
 
 # 3. Configure Credentials
 Set up the following credentials in n8n (only configure what you need):
 
-Credential	Required For	Where to Get
-Telegram Bot API	Telegram channel	@BotFather
-OpenRouter API	All AI models	openrouter.ai
-Postgres	Chat memory	Your Postgres instance
-Supabase	Vector store / RAG	supabase.com
-OpenAI API	Embeddings	platform.openai.com
-Gmail OAuth2	Email management	Google Cloud Console
-Evolution API	WhatsApp	evolution-api.com
-Google AI (Gemini)	Media processing	ai.google.dev
-Google Docs/Drive OAuth2	Document management	Google Cloud Console
-Tavily API	Web search	tavily.com
+| Credential          | Required For              | Where to Get                  |
+|--------------------|--------------------------|-------------------------------|
+| Telegram Bot API    | Telegram channel         | @BotFather                    |
+| OpenRouter API      | All AI models            | openrouter.ai                 |
+| Postgres            | Chat memory              | Your Postgres instance        |
+| Supabase            | Vector store / RAG       | supabase.com                  |
+| OpenAI API          | Embeddings               | platform.openai.com           |
+| Gmail OAuth2        | Email management         | Google Cloud Console          |
+| Evolution API       | WhatsApp                 | evolution-api.com             |
+| Google AI (Gemini)  | Media processing         | ai.google.dev                 |
+| Google Docs/Drive OAuth2 | Document management | Google Cloud Console          |
+| Tavily API          | Web search               | tavily.com                    |
 
 # 4. Update Placeholders
 Search the workflow JSON for YOUR_ and replace with your actual values:
 
-Placeholder	What to Replace With
-YOUR_USERNAME	Your chosen username
-YOUR_TELEGRAM_CHAT_ID	Your Telegram chat ID (get it from @userinfobot)
-YOUR_PHONE	Your phone number (for WhatsApp filtering)
-YOUR_EVOLUTION_INSTANCE	Your Evolution API instance name
-YOUR_WEBHOOK_PATH	Auto-generated on import (or set your own)
-YOUR_*_TABLE_ID	The IDs of the data tables you created in step 2
-YOUR_*_CREDENTIAL_ID	Auto-populated when you connect credentials in n8n
-YOUR_PROJECT_ID	Your n8n project ID
+| Placeholder                 | What to Replace With                                           |
+|-----------------------------|----------------------------------------------------------------|
+| YOUR_USERNAME               | Your chosen username                                           |
+| YOUR_TELEGRAM_CHAT_ID       | Your Telegram chat ID (get it from @userinfobot)              |
+| YOUR_PHONE                  | Your phone number (for WhatsApp filtering)                    |
+| YOUR_EVOLUTION_INSTANCE     | Your Evolution API instance name                               |
+| YOUR_WEBHOOK_PATH           | Auto-generated on import (or set your own)                   |
+| YOUR_*_TABLE_ID             | The IDs of the data tables you created in step 2             |
+| YOUR_*_CREDENTIAL_ID        | Auto-populated when you connect credentials in n8n           |
+| YOUR_PROJECT_ID             | Your n8n project ID                                           |
 
 # 5. Set Up Supabase Vector Store
 Create a documents table in Supabase with the pgvector extension enabled. The table should match the schema expected by n8n's Supabase Vector Store node (with a match_documents function).
