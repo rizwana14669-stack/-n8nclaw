@@ -25,6 +25,7 @@
                |            |
           Telegram     WhatsApp
           Reply        Reply (Evolution API)
+        
 
                       TOOLS & SUB-AGENTS
           +-------------------------------------------+
@@ -191,4 +192,7 @@ All models are configured via OpenRouter. To swap models, edit the model ID in a
 Worker 1: Cheap/fast model for simple tasks
 Worker 2: Mid-tier model for moderate complexity
 Worker 3: Best model for reasoning-heavy work
+
+# License
+MIT
 
